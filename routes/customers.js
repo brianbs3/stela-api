@@ -32,13 +32,13 @@ router.get('/:id', tokenAuth, (req, res) => {
 
 router.post('/', tokenAuth, (req, res) => {
 console.log(req.body);
-  let { firstName, lastName, areaCode, phonePrefix, phoneLineNumber, email } = req.body;
+  let { firstName, lastName, areaCode, phonePrefix, phoneLineNumber, email, address1, address2, city, state, zip, promotionEmail, promotionText, appointmentAlert } = req.body;
   lastName = lastName || null;
   areaCode = areaCode || null;
   phonePrefix = phonePrefix || null;
   phoneLineNumber = phoneLineNumber || null;
   email = email || null;
-console.log(firstName);
+
   if(firstName && lastName && areaCode && phonePrefix && phoneLineNumber && email) {
     knex('customers')
       .insert({
@@ -47,7 +47,15 @@ console.log(firstName);
         areaCode: areaCode,
         phonePrefix: phonePrefix,
         phoneLineNumber: phoneLineNumber,
-        email: email 
+        email: email,
+        address1: address1,
+        address2: address2,
+        city: city,
+        state: state,
+        zip: zip,
+        promotionEmail: promotionEmail,
+        promotionText: promotionText,
+        appointmentAlert: appointmentAlert
       })
       .then(
         m => {
@@ -57,8 +65,6 @@ console.log(firstName);
   }
   else
     return res.json({message: 'Invalid data to create user.'});
-  
 });
-
 
 module.exports = router;
