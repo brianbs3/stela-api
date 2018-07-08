@@ -17,7 +17,7 @@ app.get('/', function (req, res) {
    res.sendFile( __dirname + "/" + "index.htm" );
 })
 
-const customers = require('./routes/customers');
+const clients = require('./routes/clients');
 const auth = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +29,7 @@ var router = express.Router();
 
 app.use('/', router);
 app.use('/', auth);
-app.use('/customers', customers);
+app.use('/clients', clients);
 
 var server = app.listen(8080, function () {
   var host = server.address().address
