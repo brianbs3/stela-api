@@ -4,15 +4,39 @@ const router = require('express').Router();
 const knex = require('../config/knex');
 const tokenAuth = require('../middleware/tokenAuth');
 
-router.get('/', /*tokenAuth,*/ (req, res) => {
+
+router.get('/', (req, res) => {
     let format = req.query.format || 'JSON';
     format = format.toUpperCase();
 
-    knex.select().from('customers').then(
+    knex.select().from('clients').then(
         m => {
             return (format === "CSV") ? res.csv(JSON.parse(JSON.stringify(m)), 1) : res.json(m);
-        }
-    );
+        });
+});
+
+router.get('/notes', (req, res) => {
+    let format = req.query.format || 'JSON';
+    format = format.toUpperCase();
+
+    knex.select().from('notesView').then(
+        m => {
+        return (format === "CSV") ? res.csv(JSON.parse(JSON.stringify(m)), 1) : res.json(m);
+    });
+});
+
+router.get('/notes/:clientID', (req, res) => {
+    let format = req.query.format || 'JSON';
+    const { clientID } = req.params;
+    format = format.toUpperCase();
+
+    knex.select()
+        .from('notesView')
+        .where('clientID', clientID)
+        .then(
+            m => {
+            return (format === "CSV") ? res.csv(JSON.parse(JSON.stringify(m)), 1) : res.json(m);
+        });
 });
 
 router.get('/:id', tokenAuth, (req, res) => {
