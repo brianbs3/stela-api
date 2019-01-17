@@ -1,12 +1,11 @@
 function customerClick()
 {
   $.ajax({
-    type: 'POST',
+    type: 'GET',
     url: '/customers',
     data: {},
     success: function(data){
       $('#stelaMain').html(data);
-      $(document).tooltip();
     },
     error: function(jqXHR, textStatus, errorThrown){
       if(jqXHR.readyState == 0)
