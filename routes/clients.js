@@ -5,7 +5,7 @@ const knex = require('../config/knex');
 const tokenAuth = require('../middleware/tokenAuth');
 
 
-router.get('/', (req, res) => {
+router.get('/', tokenAuth, (req, res) => {
     let format = req.query.format || 'JSON';
     format = format.toUpperCase();
 
