@@ -8,13 +8,10 @@ function customerClick()
     dataType: 'json',
     data: {token:token},
     success: function(data){
-<<<<<<< HEAD
       $('#stelaMain').html(data);
-=======
       $.each(data, function(k, v) {
         $('#stelaMain').append(`${v.firstName} ${v.lastName}<br>`);
       });
->>>>>>> 8e40b547b944dcf87e24fd81e5e5f5457390a334
     },
     error: function(jqXHR, textStatus, errorThrown){
       console.log(jqXHR);
