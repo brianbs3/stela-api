@@ -14,10 +14,11 @@ app.set('superSecret', config.secret);
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-   res.sendFile( __dirname + "/" + "index.htm" );
+   res.sendFile( __dirname + "/" + "index.js" );
 })
 
-const customers = require('./routes/customers');
+const clients = require('./routes/clients');
+const stylists = require('./routes/stylists');
 const auth = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +30,8 @@ var router = express.Router();
 
 app.use('/', router);
 app.use('/', auth);
-app.use('/customers', customers);
+app.use('/clients', clients);
+app.use('/stylists', stylists);
 
 var server = app.listen(8080, function () {
   var host = server.address().address

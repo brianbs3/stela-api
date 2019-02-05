@@ -34,7 +34,7 @@ router.get('/authenticate', function(req, res) {
                     });
                     return res.json({
                         success: true,
-                        message: `Hello ${email}, here is your racks-api token. It will expire in 24 hours. Enjoy!`,
+                        message: `Hello ${email}, here is your stela-api token. It will expire in 24 hours. Enjoy!`,
                         token: token
                     });
                 }

@@ -8,6 +8,7 @@ function customerClick()
     dataType: 'json',
     data: {token:token},
     success: function(data){
+      $('#stelaMain').html(data);
       $.each(data, function(k, v) {
         $('#stelaMain').append(`${v.firstName} ${v.lastName}<br>`);
       });
