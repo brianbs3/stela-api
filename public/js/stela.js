@@ -20,7 +20,7 @@ function customerClick()
       if(jqXHR.status === 403)
         alert('403');
       else if(jqXHR.status === 401)
-        window.location.replace('/static/login.htm');
+        window.location.replace('/login.htm');
       else if(jqXHR.readyState == 0)
         window.location.replace(global_site_redirect);
     }

@@ -12,7 +12,10 @@ app.set('superSecret', config.secret);
 
 app.get('/', function (req, res) {
     res.sendFile( __dirname + "/" + "index.htm" );
+});
 
+app.get('/login.htm', function (req, res) {
+    res.sendFile( __dirname + "/" + "login.htm" );
 });
 app.use('/static', express.static('public'));
 
