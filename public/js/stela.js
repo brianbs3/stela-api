@@ -45,15 +45,7 @@ function getMyAppointments(){
 
     },
     error: function(jqXHR, textStatus, errorThrown){
-      console.log(jqXHR);
-      if(jqXHR.status === 401) {
-        $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
-              <br> \
-              <a class="button is-outlined is-link" id="loginButton">Login</a>';
-        $('#mobileMain').html($html);
-      }
-      else if(jqXHR.readyState == 0)
-        window.location.replace(global_site_redirect);
+      checkAJAXStatus(jqXHR,textStatus,errorThrown);
     }
   });
 }
@@ -69,22 +61,35 @@ function setupLoginButton(){
       data: {pin:pin},
       success: function(data){
         token = data['token'];
-        $html = "<a class='button is-outlined is-link'>Add Appointment</a>";
+        $html = "<div><a id=addAppointmentButton class='button is-outlined is-link'>Add Appointment</a></div><div class='content' id='addAppointmentForm'></div>";
         $('#mobileMain').html($html);
         getMyAppointments();
+        setupAddAppointmentButton();
 
       },
-      error: function(jqXHR, textStatus, errorThrown){
-        console.log(jqXHR);
-        if(jqXHR.status === 401) {
-          $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
-              <br> \
-              <a class="button is-outlined is-link" id="loginButton">Login</a>';
-          $('#mobileMain').html($html);
-        }
-        else if(jqXHR.readyState == 0)
-          window.location.replace(global_site_redirect);
+      error: function(jqXHR, textStatus, errorThrown) {
+        checkAJAXStatus(jqXHR, textStatus, errorThrown);
       }
     });
   });
+}
+
+function setupAddAppointmentButton(){
+  $('#addAppointmentButton').click(function(){
+    $('#addAppointmentForm').html('form here...');
+
+  });
+}
+
+function checkAJAXStatus(jqXHR, textStatus, errorThrown){
+
+  if(jqXHR.status === 401) {
+    $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
+              <br> \
+              <a class="button is-outlined is-link" id="loginButton">Login</a>';
+    $('#mobileMain').html($html);
+  }
+  else if(jqXHR.readyState == 0)
+    window.location.replace(global_site_redirect);
+
 }
