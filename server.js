@@ -20,6 +20,7 @@ app.get('/login.htm', function (req, res) {
 app.use('/static', express.static('public'));
 
 const clients = require('./routes/clients');
+const appointments = require('./routes/appointments');
 // const stylists = require('./routes/stylists');
 const auth = require('./routes/auth');
 
@@ -33,6 +34,7 @@ var router = express.Router();
 app.use('/', router);
 app.use('/', auth);
 app.use('/clients', clients);
+app.use('/appointments', appointments);
 
 var server = app.listen(8080, function () {
   var host = server.address().address

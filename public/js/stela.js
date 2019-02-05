@@ -33,7 +33,29 @@ function customerClick()
   });
 }
 function getMyAppointments(){
-  axios.get('/clients');
+  $.ajax({
+    type: 'GET',
+    url: '/appointments',
+    dataType: 'json',
+    data: {token:token},
+    success: function(data){
+
+
+      $('#mobileMain').append(data['message']);
+
+    },
+    error: function(jqXHR, textStatus, errorThrown){
+      console.log(jqXHR);
+      if(jqXHR.status === 401) {
+        $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
+              <br> \
+              <a class="button is-outlined is-link" id="loginButton">Login</a>';
+        $('#mobileMain').html($html);
+      }
+      else if(jqXHR.readyState == 0)
+        window.location.replace(global_site_redirect);
+    }
+  });
 }
 
 function setupLoginButton(){
@@ -47,10 +69,10 @@ function setupLoginButton(){
       data: {pin:pin},
       success: function(data){
         token = data['token'];
-        alert(data['token']);
-        $('#mobileMain').html('hello world: ' + token);
-        // customerClick();
-        // window.location.replace('/?token=' + token);
+        $html = "<a class='button is-outlined is-link'>Add Appointment</a>";
+        $('#mobileMain').html($html);
+        getMyAppointments();
+
       },
       error: function(jqXHR, textStatus, errorThrown){
         console.log(jqXHR);
