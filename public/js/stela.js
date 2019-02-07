@@ -20,7 +20,7 @@ function customerClick()
         alert('403');
         $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
               <br> \
-              <a class="button is-outlined is-link" id="loginButton">Login</a>';
+              <button class="button is-outlined is-link" id="loginButton">Login</button>';
         $('#mobileMain').html($html);
         setupLoginButton();
       }
@@ -35,13 +35,50 @@ function customerClick()
 function getMyAppointments(){
   $.ajax({
     type: 'GET',
-    url: '/appointments',
+    url: '/appointments/myMobileAppointments',
     dataType: 'json',
     data: {token:token},
     success: function(data){
+      $('#mobileMain').html(`Logged in as: ${data['firstName']} ${data['lastName']}`);
+        const $table = $("<table class='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'><tbody class='tbody'>");
+      var theDate = "";
+      var curDate = "";
+      $.each(data['appointments'], function(){
+        theDate = $(this)[0]['formattedDate'];
+        if(theDate != curDate){
+          const $dateTr = $("<tr class='tr'>");
+          const $dateTd = $("<td colspan=5 class='td has-background-black has-text-white'><b>" + theDate + "</b></td>");
+          $dateTr.append($dateTd);
+          $table.append($dateTr);
+          curDate = theDate;
+        }
+        const $tr = $("<tr class='tr'>");
+        const $firstName = $("<td class='td'>" + $(this)[0]['clientFirstName'] + "</td>");
+        const $lastName = $("<td class='td'>" + $(this)[0]['clientLastName'] + "</td>");
+          // const $formattedDate = $("<td class=td>" + $(this)[0]['formattedDate'] + "</td>");
+          const $formattedTime = $("<td class='td'>" + $(this)[0]['formattedTime'] + "</td>");
+          const $appointmentType = $("<td class='td'>" + $(this)[0]['appointmentType'] + "</td>");
+          const areaCode = $(this)[0]['areaCode'];
+          const phonePrefix = $(this)[0]['phonePrefix'];
+          const phoneLineNumber = $(this)[0]['phoneLineNumber'];
+          const $phone = $("<td class='td'><a href='tel:" + areaCode + "-" + phonePrefix + "-" + phoneLineNumber + "'>(" + areaCode + ") " + phonePrefix + "-" + phoneLineNumber + "</a></td>");
+        $tr.append($firstName)
+            .append($lastName)
+            // .append($formattedDate)
+            .append($formattedTime)
+            .append($appointmentType)
+            .append($phone);
+        $table.append($tr);
+        // $('#mobileMain').append("firstName: " + $(this)[0]['clientFirstName']);
+        console.log($(this));
+      });
+        $('#mobileMain').append($table);
+        $addButton = $("<div><a id=addAppointmentButton class='button is-outlined is-link'>Add Appointment</a></div><div class='content' id='addAppointmentForm'></div>");
+        $('#mobileMain').prepend($addButton);
+        setupAddAppointmentButton();
 
 
-      $('#mobileMain').append(data['message']);
+      console.log(data);
 
     },
     error: function(jqXHR, textStatus, errorThrown){
