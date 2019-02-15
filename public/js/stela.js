@@ -18,7 +18,7 @@ function customerClick()
     error: function(jqXHR, textStatus, errorThrown){
       if(jqXHR.status === 403) {
         alert('403');
-        $html = 'PIN: <input class="input" type="tel" id="loginPin"> \
+        $html = 'PIIIIIIN: <input class="input" type="tel" id="loginPin"> \
               <br> \
               <button class="button is-outlined is-link" id="loginButton">Login</button>';
         $('#mobileMain').html($html);
@@ -69,17 +69,12 @@ function getMyAppointments(){
             .append($appointmentType)
             .append($phone);
         $table.append($tr);
-        // $('#mobileMain').append("firstName: " + $(this)[0]['clientFirstName']);
-        console.log($(this));
       });
         $('#mobileMain').append($table);
         $addButton = $("<div><a id=addAppointmentButton class='button is-outlined is-link'>Add Appointment</a></div><div class='content' id='addAppointmentForm'></div>");
         $('#mobileMain').prepend($addButton);
+
         setupAddAppointmentButton();
-
-
-      console.log(data);
-
     },
     error: function(jqXHR, textStatus, errorThrown){
       checkAJAXStatus(jqXHR,textStatus,errorThrown);
