@@ -87,11 +87,12 @@ function setupLoginButton(){
     var pin = $('#loginPin').val();
 
     $.ajax({
-      type: 'GET',
+      type: 'POST',
       url: '/authenticate',
       dataType: 'json',
       data: {pin:pin},
       success: function(data){
+        console.log(data);
         token = data['token'];
         $html = "<div><a id=addAppointmentButton class='button is-outlined is-link'>Add Appointment</a></div><div class='content' id='addAppointmentForm'></div>";
         $('#mobileMain').html($html);
@@ -120,6 +121,9 @@ function checkAJAXStatus(jqXHR, textStatus, errorThrown){
               <br> \
               <a class="button is-outlined is-link" id="loginButton">Login</a>';
     $('#mobileMain').html($html);
+  }
+  else if(jqXHR.status === 403){
+    alert('invalid login');
   }
   else if(jqXHR.readyState == 0)
     window.location.replace(global_site_redirect);

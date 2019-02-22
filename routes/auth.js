@@ -9,7 +9,7 @@ const config = require('../config');
 
 app.set('superSecret', config.secret);
 
-router.get('/authenticate', function(req, res) {
+router.post('/authenticate', function(req, res) {
     // const email = req.body.email || req.query.email;
     // const pass = req.body.password || req.query.password;
     const pin = req.body.pin || req.query.pin;
@@ -33,12 +33,10 @@ router.get('/authenticate', function(req, res) {
 
     knex.select()
         .from('stylists')
-        .where({
-            pin: pin
-        })
+        .where(knex.raw(`pin = password(${pin})`))
         .then(r => {
             if(r[0]) {
-                if (r[0].pin === pin) {
+                // if (r[0].pin === pin) {
                     user['id'] = r[0]['id'];
                     user['firstName'] = r[0]['firstName'];
                     user['lastName'] = r[0]['lastName'];
@@ -50,7 +48,7 @@ router.get('/authenticate', function(req, res) {
                         message: `Hello ${r[0]['firstName']} ${r[0]['lastName']}, here is your stela-api token. It will expire in 24 hours. Enjoy!`,
                         token: token
                     });
-                }
+                // }
                 return res.status(403).send({
                   success: false,
                   message: 'Name/Password Does Not Match.  Contact ' + config.CONTACTEMAIL

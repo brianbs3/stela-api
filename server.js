@@ -36,9 +36,9 @@ app.use('/', auth);
 app.use('/clients', clients);
 app.use('/appointments', appointments);
 
-var server = app.listen(8088, function () {
+var server = app.listen(8080, function () {
   var host = server.address().address
-  const port = process.env.PORT || 8088;
+  const port = process.env.PORT || 8080;
    
    console.log("Stela app listening at http://%s:%s", host, port)
 });
