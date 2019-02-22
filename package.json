@@ -1,7 +1,7 @@
 {
   "name": "stela-api",
   "description": "Stela API",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "body-parser": "^1.18.2",
     "compression": "^1.7.3",
