@@ -39,7 +39,7 @@ function getMyAppointments(){
     dataType: 'json',
     data: {token:token},
     success: function(data){
-      $('#mobileMain').html(`Logged in as: ${data['firstName']} ${data['lastName']}`);
+      $('#mobileMain').html(`Showing Appointments For: ${data['firstName']} ${data['lastName']}`);
         const $table = $("<table class='table is-bordered is-striped is-narrow is-hoverable is-fullwidth'><tbody class='tbody'>");
       var theDate = "";
       var curDate = "";
