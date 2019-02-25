@@ -25,7 +25,7 @@ router.get('/myMobileAppointments', tokenAuth, (req, res) => {
     var sel = knex.select()
         .from('appointmentsview')
         .select('clientFirstName', 'clientLastName','ts','appointmentType','appointmentDuration','clientID','areaCode','phonePrefix','phoneLineNumber')
-        .select(knex.raw('DATE_FORMAT(ts, "%b %D %Y") as formattedDate'))
+        .select(knex.raw('DATE_FORMAT(ts, "%W - %b %D %Y") as formattedDate'))
         .select(knex.raw('DATE_FORMAT(ts, "%l:%i %p") as formattedTime'))
         .where('stylistID', req.decoded.id)
         .where(knex.raw('ts >= CURDATE()'))
