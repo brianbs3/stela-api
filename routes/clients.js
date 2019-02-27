@@ -10,11 +10,11 @@ router.get('/', tokenAuth, (req, res) => {
     format = format.toUpperCase();
     console.log('client route');
 
-    // knex.select().from('clients').then(
-    //     m => {
-    //         return (format === "CSV") ? res.csv(JSON.parse(JSON.stringify(m)), 1) : res.json(m);
-    //     });
-    return res.status(200).send({message: 'hello world'});
+    knex.select().from('clients').then(
+        m => {
+            return (format === "CSV") ? res.csv(JSON.parse(JSON.stringify(m)), 1) : res.json(m);
+        });
+    // return res.status(200).send({message: 'hello world'});
 });
 
 router.get('/notes', (req, res) => {
@@ -47,7 +47,7 @@ router.get('/:id', tokenAuth, (req, res) => {
   format = format.toUpperCase();
 
   knex.select()
-    .from('customers')
+    .from('clients')
     .where('id', id)
     .then(
     m => {
